@@ -85,13 +85,107 @@ body {
   min-height:100vh; color:#fff;
 }
 
+/* ===== SIDE PANELS (sama seperti halaman home) ===== */
+.side-panel {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+.side-panel.left  { left: 0; border-right: 1px solid rgba(255,255,255,0.05); }
+.side-panel.right { right: 0; border-left: 1px solid rgba(255,255,255,0.05); }
+
+/* Teks vertikal di kiri */
+.side-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(100,116,139,0.5);
+  white-space: nowrap;
+  padding: 0 6px;
+  line-height: 1;
+}
+.side-text + .side-text {
+  margin-top: 20px;
+  color: rgba(59,130,246,0.35);
+}
+
+/* Divider titik di kiri */
+.side-dots-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin: 18px 0;
+}
+.side-dots-left span {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+}
+.side-dots-left span.active {
+  background: rgba(59,130,246,0.6);
+  box-shadow: 0 0 6px rgba(59,130,246,0.5);
+}
+
+/* Indikator status di kanan (dot + label vertikal) */
+.side-indicators {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.indicator-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.indicator-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.indicator-dot.green  { background: #10b981; box-shadow: 0 0 8px rgba(16,185,129,0.7); animation: glowPulse 2s ease-in-out infinite; }
+.indicator-dot.blue   { background: #3b82f6; box-shadow: 0 0 8px rgba(59,130,246,0.7); animation: glowPulse 2s ease-in-out infinite 0.4s; }
+.indicator-dot.purple { background: #a855f7; box-shadow: 0 0 8px rgba(168,85,247,0.7); animation: glowPulse 2s ease-in-out infinite 0.8s; }
+@keyframes glowPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(0.85)} }
+
+.indicator-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(100,116,139,0.55);
+}
+
+/* Garis dekoratif horizontal di sisi panel */
+.side-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, rgba(59,130,246,0.3), transparent);
+  margin: 10px 0;
+}
+
 /* ===== NAVBAR ===== */
 .navbar {
   background: rgba(15,23,42,0.55);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   display:flex; align-items:center; justify-content:space-between;
-  padding: 0 32px; height: 62px;
+  padding: 0 48px; height: 62px;
   position: sticky; top:0; z-index:200;
   transition: background .3s;
 }
@@ -171,22 +265,12 @@ body {
   color: #94a3b8;
   display: block;
 }
-.mobile-menu .nav-link.active {
-  background: rgba(59,130,246,0.2);
-  color: var(--primary);
-}
-.mobile-menu .nav-link:hover {
-  background: rgba(59,130,246,0.12);
-  color: #93c5fd;
-}
-.mobile-menu-divider {
-  height: 1px;
-  background: rgba(255,255,255,0.07);
-  margin: 6px 0;
-}
+.mobile-menu .nav-link.active { background: rgba(59,130,246,0.2); color: var(--primary); }
+.mobile-menu .nav-link:hover { background: rgba(59,130,246,0.12); color: #93c5fd; }
+.mobile-menu-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 6px 0; }
 
 /* ===== MAIN ===== */
-main { max-width:1160px; margin:0 auto; padding:28px 20px 60px; }
+main { max-width:1160px; margin:0 auto; padding:28px 36px 60px; }
 
 /* ===== PAGE HEADER ===== */
 .page-header {
@@ -258,7 +342,6 @@ main { max-width:1160px; margin:0 auto; padding:28px 20px 60px; }
   flex-wrap:wrap; gap:14px;
 }
 .card-header h2 { font-size:16px; font-weight:600; color:#fff; }
-
 .card-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
 
 .search-wrap { position:relative; }
@@ -317,7 +400,6 @@ tbody tr.row-new:hover td { background:rgba(245,158,11,0.1); }
 .id-badge { font-weight:700; color:#fff; background:rgba(59,130,246,0.2); border:1px solid rgba(59,130,246,0.3); padding:3px 10px; border-radius:6px; font-size:12px; font-family:monospace; }
 .name-cell { color:#fff; font-weight:500; }
 .new-tag { background:rgba(245,158,11,0.2); color:#fbbf24; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; margin-left:6px; border:1px solid rgba(245,158,11,0.3); }
-
 .actions { display:flex; gap:6px; align-items:center; }
 
 /* Empty state */
@@ -350,6 +432,7 @@ tbody tr.row-new:hover td { background:rgba(245,158,11,0.1); }
   .form-grid { grid-template-columns:1fr 1fr; }
   .search-input { width:180px; }
   .search-input:focus { width:200px; }
+  .side-panel { display:none; }
 }
 
 @media (max-width:600px) {
@@ -378,6 +461,55 @@ tbody tr.row-new:hover td { background:rgba(245,158,11,0.1); }
 </style>
 </head>
 <body>
+
+<!-- ===== SIDE PANEL KIRI ===== -->
+<div class="side-panel left">
+  <div class="side-line"></div>
+  <div class="side-dots-left">
+    <span class="active"></span>
+    <span></span>
+    <span></span>
+    <span class="active"></span>
+    <span></span>
+  </div>
+  <div class="side-text">Sistem Absensi · SMKN 2 Yogyakarta</div>
+  <div class="side-dots-left">
+    <span></span>
+    <span class="active"></span>
+    <span></span>
+    <span></span>
+    <span class="active"></span>
+  </div>
+  <div class="side-text">IoT Fingerprint Abs</div>
+  <div class="side-dots-left">
+    <span></span>
+    <span></span>
+    <span class="active"></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="side-line"></div>
+</div>
+
+<!-- ===== SIDE PANEL KANAN ===== -->
+<div class="side-panel right">
+  <div class="side-line"></div>
+  <div class="side-indicators">
+    <div class="indicator-item">
+      <div class="indicator-dot green"></div>
+      <div class="indicator-label">Online</div>
+    </div>
+    <div class="indicator-item">
+      <div class="indicator-dot blue"></div>
+      <div class="indicator-label">IoT</div>
+    </div>
+    <div class="indicator-item">
+      <div class="indicator-dot purple"></div>
+      <div class="indicator-label">SMK</div>
+    </div>
+  </div>
+  <div class="side-line"></div>
+</div>
 
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
